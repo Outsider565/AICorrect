@@ -10,5 +10,6 @@ services:
       - vscode-server:/home/code/.vscode-server
     command: bash -c "while true; do sleep 1; done"
 
+
 volumes:
   vscode-server:     
