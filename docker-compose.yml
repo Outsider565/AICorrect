@@ -1,0 +1,14 @@
+version: '3.0'
+services:
+  backend:
+    build: ./backend
+    ports:
+      - 8080:8080
+    volumes:
+      - ./backend:/backend
+      - ./examples:/examples
+      - vscode-server:/home/code/.vscode-server
+    command: bash -c "while true; do sleep 1; done"
+
+volumes:
+  vscode-server:     
