@@ -48,4 +48,5 @@
 详见backend/runtime_error.py，共63条规则
 
 ## 运行效果
+![](https://github.com/Outsider565/AICorrect/blob/main/imgs/compile_error.jpg)
 
