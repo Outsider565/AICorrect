@@ -45,8 +45,11 @@
 ## 模糊逻辑系统
 
 在本项目中，使用scikit-fuzzy库来实现模糊逻辑系统。
-详见backend/runtime_error.py，共63条规则
+详见backend/runtime_error.py，共63条规则，模糊逻辑系统的拓扑图如下：
+![](https://github.com/Outsider565/AICorrect/blob/main/imgs/fuzzy_system.png)
 
 ## 运行效果
 ![](https://github.com/Outsider565/AICorrect/blob/main/imgs/compile_error.jpg)
+![](https://github.com/Outsider565/AICorrect/blob/main/imgs/link_error.jpg)
+![](https://github.com/Outsider565/AICorrect/blob/main/imgs/runtime_error.jpg)
 
