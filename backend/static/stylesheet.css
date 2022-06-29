@@ -1,0 +1,25 @@
+textarea {
+    /* will prevent resizing horizontally */
+    resize: vertical;
+}
+
+.middle {
+
+    float: none;
+
+    display: inline-block;
+
+    vertical-align: middle;
+
+}
+
+.titlediv {
+    margin-top: 20pt;
+}
+
+.fix-note {
+    min-height: 5000;
+    max-height: 5000;
+    overflow-y: scroll;
+    height: 500;
+}

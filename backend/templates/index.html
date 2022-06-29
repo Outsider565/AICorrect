@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="icon" type="image/png" href={{url_for('static', filename="debug.jpeg" )}}>
+    <link rel="stylesheet" href="{{url_for('static', filename='stylesheet.css')}}">
+    <title>AICorrect: Your Smart Debugger</title>
+</head>
+
+<body>
+    <!-- 居中的网站title -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 text-center titlediv">
+                <h1>AICorrect: 你的智能DEBUG助手</h1>
+            </div>
+            <!-- 右侧插入图片 -->
+            <div class="col-md-2">
+                <img src={{url_for('static', filename="debug.jpeg" )}} alt="debug.jpeg" class="img-responsive">
+            </div>
+        </div>
+    </div>
+    <!-- 一个文字输入栏，输入的文字发送以get的形式发送到/api/run-->
+
+    <div class="container ">
+        <div class="panel panel-default">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">DEBUG设置:</h3>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="input">请输入需要DEBUG的文件或文件夹路径:</label>
+                            <input type="text" class="form-control" id="path" name="path" placeholder="请输入路径:">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="slider">你程序崩溃的频率? (0为从不,10为总是)</label>
+                            <input type="range" min="0" max="10" value="0" class="form-control" id="crush-slider"
+                                name="slider">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="slider">你程序的CPU占用? (0为非常低,10为非常高)</label>
+                            <input type="range" min="0" max="10" value="0" class="form-control" id="cpu-slider"
+                                name="slider">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="slider">你程序的内存占用? (0为非常低,10为非常高)</label>
+                            <input type="range" min="0" max="10" value="0" class="form-control" id="mem-slider"
+                                name="slider">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="slider">你程序的运行时间？(0为非常短,10为不会结束)</label>
+                            <input type="range" min="0" max="10" value="0" class="form-control" id="time-slider"
+                                name="slider">
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="slider">你运行结果正确的频率 (0为从不,10为总是)</label>
+                            <input type="range" min="0" max="10" value="0" class="form-control" id="correct-slider"
+                                name="slider">
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="margin-bottom: 10px;">
+                        <button type="button" class="btn btn-primary btn-block" id="submit-btn">提交</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 下面分成三栏，分别是编译错误、链接错误、运行错误 -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">编译错误</h3>
+                    </div>
+                    <div class="panel-body fix-note">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger hidden" id="compile-error">
+                                <strong>编译错误！</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="alert alert-success hidden" id="compile-success">
+                                <strong>编译成功！</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">链接错误</h3>
+                    </div>
+                    <div class="panel-body fix-note">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger hidden" id="link-error">
+                                <strong>链接错误！</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="alert alert-success hidden" id="link-success">
+                                <strong>链接成功！</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="alert alert-warning hidden" id="link-notdone">
+                                <strong>未链接！</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">运行错误</h3>
+                    </div>
+                    <div class="panel-body fix-note">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger hidden" id="runtime-error">
+                                <strong>运行错误！</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="alert alert-warning hidden" id="runtime-notdone">
+                                <strong>未运行！</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                $('#submit-btn').click(function () {
+                    $.ajax({
+                        url: '/api/run',
+                        type: 'GET',
+                        data: {
+                            path: $('#path').val(),
+                            crush: $('#crush-slider').val(),
+                            cpu: $('#cpu-slider').val(),
+                            mem: $('#mem-slider').val(),
+                            time: $('#time-slider').val(),
+                            correct: $('#correct-slider').val()
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            console.log(data.compile_message);
+                            if (data.compile_message.length > 0) {
+                                $('#compile-error').removeClass('hidden');
+                                $('#compile-error').html(data.compile_message);
+                                $('#compile-success').addClass('hidden');
+                                $('#link-error').addClass('hidden');
+                                $('#link-success').addClass('hidden');
+                                $('#link-notdone').removeClass('hidden');
+                                $('#runtime-error').addClass('hidden');
+                                $('#runtime-notdone').removeClass('hidden');
+                            }
+                            if (data.link_message.length > 0) {
+                                $('#compile-error').addClass('hidden');
+                                $('#compile-success').removeClass('hidden');
+                                $('#link-error').removeClass('hidden');
+                                $('#link-error').html(data.link_message);
+                                $('#link-success').addClass('hidden');
+                                $('#link-notdone').addClass('hidden');
+                                $('#runtime-error').addClass('hidden');
+                                $('#runtime-notdone').removeClass('hidden');
+                            }
+                            if (data.runtime_message.length > 0) {
+                                $('#compile-error').addClass('hidden');
+                                $('#compile-success').removeClass('hidden');
+                                $('#link-error').addClass('hidden');
+                                $('#link-success').removeClass('hidden');
+                                $('#runtime-error').removeClass('hidden');
+                                $('#runtime-error').html(data.runtime_message);
+                                $('#runtime-notdone').addClass('hidden');
+                            }
+                        }
+                    })
+                });
+            });
+        </script>
+        <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+
+        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

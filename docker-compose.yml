@@ -3,7 +3,7 @@ services:
   backend:
     build: ./backend
     ports:
-      - 8080:8080
+      - "8080:8080"
     volumes:
       - ./backend:/backend
       - ./examples:/examples

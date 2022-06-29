@@ -1,2 +1,4 @@
 .DS_Store
 .vscode
+backend/__pycache__
+*.o

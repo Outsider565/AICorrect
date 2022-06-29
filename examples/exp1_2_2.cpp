@@ -9,7 +9,7 @@ int main() {
     int arr[] = {0, 1, 2, 3, 4, 5};
     int m = arr[0];
     for (int i = 1; i < 6; i++) {
-        m = ma(arr[i], m);
+        m = ax(arr[i], m);
     }
     return m;
 }

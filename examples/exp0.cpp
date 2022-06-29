@@ -1,7 +1,7 @@
-//例子1_1_1, 词法错误-关键字错误-原生类型错误
+//例子0，能被正确编译，用于调试程序
 #include <iostream>
 using namespace std;
-innttt main(){
+int main(){
     cout << "Hello, world";
     return 0;
 }

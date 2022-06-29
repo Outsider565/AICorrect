@@ -1,1 +1,1 @@
-void add1(int& a);
+void add1();
